@@ -1,60 +1,97 @@
 <?php
 //
-// Module: checkAccess.php (2017-07-13) G.J. Watson
-//
-// Purpose: Return JSON string containing Lottery results
-//
-// Date       Version Note
-// ========== ======= ====================================================
-// 2017-07-14 v1.00   First cut of code
-// 2017-10-10 v1.01   Added support for access limits / time
+//  Module: CheckAccess.php - G.J. Watson
+//    Desc: Class to check the user accessing the service is allowed too
+// Version: 1.00
 //
 
-    require_once("common.php");
-    require_once("sqlaccess.php");
+require_once("ServiceError.php");
 
-    $version = "v1.01";
+final class CheckAccess {
 
-    function checkAccess($db, $token) {
+    private $token;
+    private $status;
+    private $requests;
+    private $period;
+
+    function __construct($db, $token) {
+        $this->token    = $token;
+        $this->status   = OK;
+        $this->requests = 0;
+        $this->period   = 0;
+
         if (empty($token)) {
-            return ACCESSTOKENMISSING;
-        }
-        try {
-            if (!$access = $db->query(getAccessSQL().setToken($token).setActiveOnly())) {
-                throw new Exception("Unable to retrieve access information");
-            }
-            if ($row = $access->fetch_array(MYSQLI_ASSOC)) {
-                $status   = $row['ident'];
-                $requests = $row['requests_per_period'];
-                $period   = $row['time_period'];
-                $message  = "Access token (".$token.") found, ";
-                //
-                // if requests_per_period == 0 on db, user allowed unlimited requests
-                //
-                if ($requests == 0) {
-                    $message .= "account has unlimited access as requests set to 0...";
-                    debugMessage($message);
-                } else {
-                    $message .= $requests." reqs allowed in ".$period." minutes, ";
-                    if (!$req = $db->query(getRequestsMadeSQL($token, $period))) {
-                        throw new Exception("Unable to retrieve requests information");
-                    }
-                    if ($row = $req->fetch_array(MYSQLI_ASSOC)) {
-                        $made     = $row['reqs'];
-                        $message .= "used ".$made." reqs...";
-                        debugMessage($message);
-                        if ($made >= $requests) {
-                            $status = TOOMANYREQUESTS;
+            $this->status = ACCESSTOKENMISSING;
+        } else {
+            try {
+                if (!$access = $db->query(checkUserExistSQL())) {
+                    throw new Exception("Unable to retrieve access information");
+                }
+                if ($row = $access->fetch_array(MYSQLI_ASSOC)) {
+                    $this->status   = $row['ident'];
+                    $this->requests = $row['requests_per_period'];
+                    $this->period   = $row['time_period'];
+                    //
+                    // if requests_per_period == 0 on db, user allowed unlimited requests
+                    //
+                    if ($this->requests <> 0) {
+                        if (!$req = $db->query(checkRequestsLimitSQL())) {
+                            throw new Exception("Unable to retrieve requests information");
+                        }
+                        if ($row = $req->fetch_array(MYSQLI_ASSOC)) {
+                            $made     = $row['reqs'];
+                            if ($made >= $this->requests) {
+                                $this->status = TOOMANYREQUESTS;
+                            }
                         }
                     }
+                } else {
+                    $this->status = INCORRECTTOKENSUPPLIED;
                 }
-            } else {
-                debugMessage("Supplied access token (".$token.") does not exist...");
-                $status = INCORRECTTOKENSUPPLIED;
+            } catch (Exception $e) {
+                $this->status = DATABASEERROR;
             }
-        } catch (Exception $e) {
-            $status = DATABASEERROR;
         }
-        return $status;
     }
+
+    function checkUserExistSQL() {
+        $sql  = "SELECT ac.ident,ac.name,ac.token,ac.requests_per_period,ac.time_period,ac.created_when,ac.last_modified,ac.end_dated FROM access ac";
+        $sql .= " WHERE ac.token = '".$this->token."'";
+        $sql .= " AND ac.end_dated IS NULL";
+        return $sql;
+    }
+
+    function checkRequestsLimitSQL() {
+        $sql  = "SELECT COUNT(*) AS reqs FROM access ac LEFT JOIN request_history rh";
+        $sql .= " ON ac.ident = rh.access_ident";
+        $sql .= " WHERE ac.token = '".$this->token."'";
+        $sql .= " AND rh.accessed > date_sub(now(), INTERVAL ".$this->period." MINUTE)";
+        return $sql;
+    }
+
+    function addRequestSQL($remote, $id) {
+        return "INSERT INTO request_history (remote, access_ident) VALUES ('".$remote."',".$id.")";
+    }
+
+    function getToken() {
+        return $this->token;
+    }
+
+    function getStatus() {
+        return $this->status;
+    }
+
+    function getRequests() {
+        return $this->requests;
+    }
+
+    function getPeriod() {
+        return $this->period;
+    }
+
+    function checkStatus() {
+
+    }
+}
+
 ?>
