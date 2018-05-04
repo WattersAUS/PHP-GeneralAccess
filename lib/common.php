@@ -19,7 +19,7 @@ final class Common {
     }
 
     function jsonFilename($workspace, $filename) {
-        return $workspace.getGeneratedDate()."_".$filename;
+        return $workspace.$this->getGeneratedDate()."_".$filename;
     }
 }
 ?>
