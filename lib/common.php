@@ -7,7 +7,7 @@
 
 final class Common {
 
- 	function __construct() {
+    function __construct() {
     }
 
     static function getGeneratedDate() {
@@ -18,8 +18,24 @@ final class Common {
         return date("Y-m-d H:i:s");
     }
 
-    function jsonFilename($workspace, $filename) {
-        return $workspace.$this->getGeneratedDate()."_".$filename;
+    private function logDateTime() {
+        return "[ ".$this->getGeneratedDateTime()." ] ";
+    }
+
+    private function logMessage($type, $message) {
+        return $this->logDateTime().$type.": ".$message."\n";
+    }
+
+    function logINFOMessage($message) {
+        return $this->logMessage(" INFO", $message);
+    }
+
+    function logDEBUGMessage($message) {
+        return $this->logMessage("DEBUG", $message);
+    }
+
+    function logERRORMessage($message) {
+        return $this->logMessage("ERROR", $message);
     }
 }
 ?>

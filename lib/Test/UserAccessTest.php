@@ -116,7 +116,7 @@ final class UserAccessTest extends TestCase {
             $this->access->logRequest($this->db, $testip, $ident);
             $testip = "6th access";
             $this->access->logRequest($this->db, $testip, $ident);
-            // no we should get rejected as the number of accesses should be used up!
+            // now we should get rejected as the number of accesses should be used up!
             print("Checking token that should exceed usage: ".$this->access->getToken()."\n");
             $this->access->checkAccessAllowed($this->db);
             $result = print("We shouldn't get here, as the number of accesses should exceed usage level!");
