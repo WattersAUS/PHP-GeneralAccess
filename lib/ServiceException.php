@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.01
+// Version: 1.02
 //
 
 declare(strict_types = 1);
@@ -14,13 +14,16 @@ define("DBINSERTERROR",          array("message" => "Database insert failed",   
 define("DBUPDATEERROR",          array("message" => "Database update failed",   "code" => -9993));
 define("DBGENERALERROR",         array("message" => "Database general failure", "code" => -9999));
 
-// http request / JSON format / token issues
-define("REAQMETHODERROR",        array("message" => "Unrecognised HTTP request!",          "code" => -9980));
-define("ACCESSTOKENMISSING",     array("message" => "Service was supplied a blank token!", "code" => -9981));
-define("INCORRECTTOKENSUPPLIED", array("message" => "Service does not recognise token!",   "code" => -9982));
-define("ACCESSDENIED",           array("message" => "Service access has been denied!",     "code" => -9983));
-define("TOOMANYREQUESTS",        array("message" => "Token blocked for usage abuse!",      "code" => -9984));
-define("TOKENEXPIRED",           array("message" => "Token has expired, request another!", "code" => -9985));
+// http request issues
+define("HTTPMETHODERROR",        array("message" => "Unrecognised HTTP request!", "code" => -9980));
+define("HTTPSUPPORTERROR",       array("message" => "Unsupported HTTP request!",  "code" => -9981));
+
+// JSON format / token issues
+define("ACCESSTOKENMISSING",     array("message" => "Service was supplied a blank token!", "code" => -9970));
+define("INCORRECTTOKENSUPPLIED", array("message" => "Service does not recognise token!",   "code" => -9971));
+define("ACCESSDENIED",           array("message" => "Service access has been denied!",     "code" => -9972));
+define("TOOMANYREQUESTS",        array("message" => "Token blocked for usage abuse!",      "code" => -9973));
+define("TOKENEXPIRED",           array("message" => "Token has expired, request another!", "code" => -9974));
 
 // no idea what went wrong
 define("UNKNOWNERROR",           array("message" => "An unknown error has occured!", "code" => -9000));
