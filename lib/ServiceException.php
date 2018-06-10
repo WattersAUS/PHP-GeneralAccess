@@ -15,8 +15,9 @@ define("DBUPDATEERROR",          array("message" => "Database update failed",   
 define("DBGENERALERROR",         array("message" => "Database general failure", "code" => -9999));
 
 // http request issues
-define("HTTPMETHODERROR",        array("message" => "Unrecognised HTTP request!", "code" => -9980));
-define("HTTPSUPPORTERROR",       array("message" => "Unsupported HTTP request!",  "code" => -9981));
+define("HTTPMETHODERROR",        array("message" => "Unrecognised HTTP request!",         "code" => -9980));
+define("HTTPSUPPORTERROR",       array("message" => "Unsupported HTTP request!",          "code" => -9981));
+define("HTTPROUTINGERROR",       array("message" => "Unsupported routing request made!",  "code" => -9981));
 
 // JSON format / token issues
 define("ACCESSTOKENMISSING",     array("message" => "Service was supplied a blank token!", "code" => -9970));
