@@ -2,7 +2,7 @@
 //
 //  Module: JsonBuilder.php - G.J. Watson
 //    Desc: Json Object Builder
-// Version: 1.00
+// Version: 1.01
 //
 
 require_once("Common.php");
@@ -30,7 +30,7 @@ final class JsonBuilder {
         $output["function"]  = $this->function;
         $output["generated"] = $this->when;
         $output[$this->name] = $this->contents;
-        return json_encode($output);
+        return json_encode($output, JSON_NUMERIC_CHECK);
     }
 
 }
