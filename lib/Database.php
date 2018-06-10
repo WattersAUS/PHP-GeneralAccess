@@ -66,7 +66,7 @@ final class Database {
     function update($sql) {
         $result = $this->mysqli->query($sql);
         if (!$result) {
-            throw new ServiceException(DBIUPDATEERROR["message"], DBUPDATEERROR["code"]);
+            throw new ServiceException(DBUPDATEERROR["message"], DBUPDATEERROR["code"]);
         }
         return $this->mysqli->insert_id;
     }
