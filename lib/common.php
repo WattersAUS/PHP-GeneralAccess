@@ -2,7 +2,7 @@
 //
 //  Module: Common.php - G.J. Watson
 //    Desc: Contains modules to use through out scripts
-// Version: 2.00
+// Version: 2.01
 //
 
 final class Common {
