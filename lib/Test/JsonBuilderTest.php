@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-set_include_path("../../PHP-QuoteServiceOO/lib/db");
+set_include_path("../lib/objects");
 
 require_once("Author.php");
 require_once("JsonBuilder.php");
