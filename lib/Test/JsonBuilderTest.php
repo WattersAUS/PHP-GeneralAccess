@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-set_include_path("../lib/objects");
+set_include_path("../");
 
-require_once("Author.php");
+require_once("./objects/Author.php");
 require_once("JsonBuilder.php");
 
 final class JsonBuilderTest extends TestCase {
