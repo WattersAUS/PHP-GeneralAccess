@@ -30,7 +30,7 @@ final class ServiceExceptionTest extends TestCase {
         } catch (ServiceException $e) {
             // Should be caught here
             $this->assertEquals(403, $e->getHTMLResponseCode());
-            $this->assertEquals(0,   strcmp("Forbidden", $e->getHTMLResponseMsg()));
+            $this->assertEquals(0,   strcmp("403 Forbidden", $e->getHTMLResponseMsg()));
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
