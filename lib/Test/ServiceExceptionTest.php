@@ -29,8 +29,9 @@ final class ServiceExceptionTest extends TestCase {
             throw new ServiceException(ACCESSDENIED["message"], ACCESSDENIED["code"]);
         } catch (ServiceException $e) {
             // Should be caught here
-            $result = print($e->jsonString());
-            $this->assertEquals(1, $result);
+            $this->assertEquals(403, $e->getHTMLResponseCode());
+            $this->assertEquals(0,   strcmp("Forbidden", $e->getHTMLResponseMsg()));
+            $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
             $result = print("Caught as normal exception!");
