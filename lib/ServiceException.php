@@ -48,33 +48,33 @@ class ServiceException extends Exception {
         switch ($code) {
             case -9700:
                 $this->htmlResponseCode = 400;
-                $this->htmlResponseMsg  = "Bad Request";
+                $this->htmlResponseMsg  = "400 Bad Request";
                 break;
             case -9970:
             case -9971:
                 $this->htmlResponseCode = 401;
-                $this->htmlResponseMsg  = "Unauthorized";
+                $this->htmlResponseMsg  = "401 Unauthorized";
                 break;
             case -9972:
             case -9974:
                 $this->htmlResponseCode = 403;
-                $this->htmlResponseMsg  = "Forbidden";
+                $this->htmlResponseMsg  = "403 Forbidden";
                 break;
             case -9701:
             case -9702:
             case -9800:
                 $this->htmlResponseCode = 406;
-                $this->htmlResponseMsg  = "Not Acceptable";
+                $this->htmlResponseMsg  = "406 Not Acceptable";
                 break;
             case -9973:
                 $this->htmlResponseCode = 429;
-                $this->htmlResponseMsg  = "Too Many Requests";
+                $this->htmlResponseMsg  = "429 Too Many Requests";
                 break;
             case -9980:
             case -9981:
             case -9982:
                 $this->htmlResponseCode = 501;
-                $this->htmlResponseMsg  = "Not Implemented";
+                $this->htmlResponseMsg  = "501 Not Implemented";
                 break;
             case -9000:
             case -9990:
@@ -84,7 +84,7 @@ class ServiceException extends Exception {
             case -9999:
             default:
                 $this->htmlResponseCode = 500;
-                $this->htmlResponseMsg  = "Internal Server Error";
+                $this->htmlResponseMsg  = "500 Internal Server Error";
         }
     }
 
