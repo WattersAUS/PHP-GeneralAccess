@@ -2,7 +2,7 @@
 //
 //  Module: JsonWriterTest.php - G.J. Watson
 //    Desc: Tests for JsonWriter Class
-// Version: 1.00
+// Version: 1.01
 //
 
 declare(strict_types=1);
@@ -70,14 +70,13 @@ final class JsonBuilderTest extends TestCase {
 
         $version  = "v1.00";
         $service  = "testservice";
-        $function = "testJsonBuilderResultJsonForAuthor";
         $when     = "generatedTime";
         $name     = "author";
         $contents = $this->author->getAuthorAsArray();
 
-        $expected = "{\"version\":\"v1.00\",\"service\":\"testservice\",\"function\":\"testJsonBuilderResultJsonForAuthor\",\"generated\":\"generatedTime\",\"author\":{\"author_id\":10,\"author_name\":\"Author Name\",\"author_period\":\"Period\",\"added\":\"Time\"}}";
+        $expected = "{\"version\":\"v1.00\",\"service\":\"testservice\",\"generated\":\"generatedTime\",\"author\":{\"author_id\":10,\"author_name\":\"Author Name\",\"author_period\":\"Period\",\"added\":\"Time\"}}";
 
-        $builder  = new JsonBuilder($version, $service, $function, $when, $name, $contents);
+        $builder  = new JsonBuilder($version, $service, $when, $name, $contents);
         $json     = $builder->getJson();
         $this->assertEquals(0, strcmp($json, $expected));
     }
@@ -87,7 +86,6 @@ final class JsonBuilderTest extends TestCase {
 
         $version  = "v1.01";
         $service  = "testservice2";
-        $function = "testJsonBuilderResultJsonForAuthorAllQuotes";
         $when     = "generatedTime2";
         $name     = "author2";
         $quote1   = new Quote($this->testQuote1, $this->testText1, $this->testUsed1, $this->testQTime1);
@@ -96,9 +94,9 @@ final class JsonBuilderTest extends TestCase {
         $this->author->addQuote($quote2);
         $contents = $this->author->getAuthorWithAllQuotesAsArray();
 
-        $expected = "{\"version\":\"v1.01\",\"service\":\"testservice2\",\"function\":\"testJsonBuilderResultJsonForAuthorAllQuotes\",\"generated\":\"generatedTime2\",\"author2\":{\"author_id\":10,\"author_name\":\"Author Name\",\"author_period\":\"Period\",\"added\":\"Time\",\"quotes\":[{\"quote_id\":33,\"quote_text\":\"Quote text 1\",\"times_used\":444,\"added\":\"Time 1\"},{\"quote_id\":44,\"quote_text\":\"Quote text 2\",\"times_used\":555,\"added\":\"Time2\"}]}}";
+        $expected = "{\"version\":\"v1.01\",\"service\":\"testservice2\",\"generated\":\"generatedTime2\",\"author2\":{\"author_id\":10,\"author_name\":\"Author Name\",\"author_period\":\"Period\",\"added\":\"Time\",\"quotes\":[{\"quote_id\":33,\"quote_text\":\"Quote text 1\",\"times_used\":444,\"added\":\"Time 1\"},{\"quote_id\":44,\"quote_text\":\"Quote text 2\",\"times_used\":555,\"added\":\"Time2\"}]}}";
 
-        $builder  = new JsonBuilder($version, $service, $function, $when, $name, $contents);
+        $builder  = new JsonBuilder($version, $service, $when, $name, $contents);
         $json     = $builder->getJson();
         $this->assertEquals(0, strcmp($json, $expected));
     }
@@ -108,16 +106,15 @@ final class JsonBuilderTest extends TestCase {
 
         $version  = "v1.02";
         $service  = "testservice3";
-        $function = "testJsonBuilderResultJsonForAuthorRandomQuote";
         $when     = "generatedTime3";
         $name     = "author3";
         $quote1   = new Quote($this->testQuote3, $this->testText3, $this->testUsed3, $this->testQTime3);
         $this->author->addQuote($quote1);
-        $contents = $this->author->getAuthorWithRandomQuoteAsArray();
+        $contents = $this->author->getAuthorWithSelectedQuoteAsArray(0);
 
-        $expected = "{\"version\":\"v1.02\",\"service\":\"testservice3\",\"function\":\"testJsonBuilderResultJsonForAuthorRandomQuote\",\"generated\":\"generatedTime3\",\"author3\":{\"author_id\":10,\"author_name\":\"Author Name\",\"author_period\":\"Period\",\"added\":\"Time\",\"quote\":{\"quote_id\":55,\"quote_text\":\"Quote text 3\",\"times_used\":666,\"added\":\"Time3\"}}}";
+        $expected = "{\"version\":\"v1.02\",\"service\":\"testservice3\",\"generated\":\"generatedTime3\",\"author3\":{\"author_id\":10,\"author_name\":\"Author Name\",\"author_period\":\"Period\",\"added\":\"Time\",\"quote\":{\"quote_id\":55,\"quote_text\":\"Quote text 3\",\"times_used\":666,\"added\":\"Time3\"}}}";
 
-        $builder  = new JsonBuilder($version, $service, $function, $when, $name, $contents);
+        $builder  = new JsonBuilder($version, $service, $when, $name, $contents);
         $json     = $builder->getJson();
         $this->assertEquals(0, strcmp($json, $expected));
     }
