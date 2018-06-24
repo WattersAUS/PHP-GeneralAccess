@@ -2,7 +2,7 @@
 //
 //  Module: JsonBuilder.php - G.J. Watson
 //    Desc: Json Object Builder
-// Version: 1.01
+// Version: 1.02
 //
 
 require_once("Common.php");
@@ -10,7 +10,6 @@ require_once("Common.php");
 final class JsonBuilder {
     private $version;
     private $service;
-    private $function;
     private $when;
     private $name;
     private $contents;
