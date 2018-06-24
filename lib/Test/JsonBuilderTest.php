@@ -108,16 +108,15 @@ final class JsonBuilderTest extends TestCase {
 
         $version  = "v1.02";
         $service  = "testservice3";
-        $function = "testJsonBuilderResultJsonForAuthorRandomQuote";
         $when     = "generatedTime3";
         $name     = "author3";
         $quote1   = new Quote($this->testQuote3, $this->testText3, $this->testUsed3, $this->testQTime3);
         $this->author->addQuote($quote1);
-        $contents = $this->author->getAuthorWithRandomQuoteAsArray();
+        $contents = $this->author->getAuthorWithSelectedQuoteAsArray(0);
 
-        $expected = "{\"version\":\"v1.02\",\"service\":\"testservice3\",\"function\":\"testJsonBuilderResultJsonForAuthorRandomQuote\",\"generated\":\"generatedTime3\",\"author3\":{\"author_id\":10,\"author_name\":\"Author Name\",\"author_period\":\"Period\",\"added\":\"Time\",\"quote\":{\"quote_id\":55,\"quote_text\":\"Quote text 3\",\"times_used\":666,\"added\":\"Time3\"}}}";
+        $expected = "{\"version\":\"v1.02\",\"service\":\"testservice3\",\"generated\":\"generatedTime3\",\"author3\":{\"author_id\":10,\"author_name\":\"Author Name\",\"author_period\":\"Period\",\"added\":\"Time\",\"quote\":{\"quote_id\":55,\"quote_text\":\"Quote text 3\",\"times_used\":666,\"added\":\"Time3\"}}}";
 
-        $builder  = new JsonBuilder($version, $service, $function, $when, $name, $contents);
+        $builder  = new JsonBuilder($version, $service, $when, $name, $contents);
         $json     = $builder->getJson();
         $this->assertEquals(0, strcmp($json, $expected));
     }
