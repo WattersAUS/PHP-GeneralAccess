@@ -30,7 +30,8 @@ define("TOKENEXPIRED",           array("message" => "Token has expired, request 
 define("UNKNOWNERROR",           array("message" => "An unknown error has occured!", "code" => -9000));
 
 // lottery service errors
-define("ILLEGALDRAWCOUNT",     array("message" => "Draw count out of range!", "code" => -9800));
+define("ILLEGALLOTTERYID",     array("message" => "Lottery ID missing or illegal!", "code" => -9800));
+define("ILLEGALDRAWCOUNT",     array("message" => "Draw count out of range!", "code"       => -9801));
 
 // quote service errors
 define("ILLEGALAUTHORID",      array("message" => "Author ID missing or illegal!", "code" => -9700));
@@ -47,6 +48,7 @@ class ServiceException extends Exception {
         parent::__construct($message, $code, $previous);
         switch ($code) {
             case -9700:
+            case -9800:
                 $this->htmlResponseCode = 400;
                 $this->htmlResponseMsg  = "400 Bad Request";
                 break;
@@ -62,7 +64,7 @@ class ServiceException extends Exception {
                 break;
             case -9701:
             case -9702:
-            case -9800:
+            case -9801:
                 $this->htmlResponseCode = 406;
                 $this->htmlResponseMsg  = "406 Not Acceptable";
                 break;
