@@ -5,6 +5,8 @@
 // Version: 2.00
 //
 
+require_once("ServiceException.php");
+
 final class Common {
 
     function __construct() {
@@ -36,6 +38,27 @@ final class Common {
 
     function logERRORMessage($message) {
         return $this->logMessage("ERROR", $message);
+    }
+
+    function validateURLVariableExists($key, $message, $code, $array) {
+        if (empty($key) || empty($array)) {
+            throw new ServiceException($message, $code);
+        }
+        if (! array_key_exists($key, $array)) {
+            throw new ServiceException($message, $code);
+        }
+        if (empty($array[$key])) {
+            throw new ServiceException($message, $code);
+        }
+        return;
+    }
+
+    function validateNumericURLVariable($key, $message, $code, $array) {
+        $this->validateURLVariableExists($key, $message, $code, $array);
+        if (!is_numeric($array[$key])) {
+            throw new ServiceException($message, $code);
+        }
+        return;
     }
 }
 ?>
