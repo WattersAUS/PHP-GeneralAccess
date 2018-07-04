@@ -2,7 +2,7 @@
 //
 //  Module: Common.php - G.J. Watson
 //    Desc: Contains modules to use through out scripts
-// Version: 2.00
+// Version: 2.02
 //
 
 require_once("ServiceException.php");
@@ -40,25 +40,16 @@ final class Common {
         return $this->logMessage("ERROR", $message);
     }
 
-    function validateURLVariableExists($key, $message, $code, $array) {
-        if (empty($key) || empty($array)) {
-            throw new ServiceException($message, $code);
-        }
-        if (! array_key_exists($key, $array)) {
-            throw new ServiceException($message, $code);
-        }
-        if (empty($array[$key])) {
-            throw new ServiceException($message, $code);
-        }
-        return;
+    function printINFOMessage($message) {
+        return $this->logINFOMessage($message);
     }
 
-    function validateNumericURLVariable($key, $message, $code, $array) {
-        $this->validateURLVariableExists($key, $message, $code, $array);
-        if (!is_numeric($array[$key])) {
-            throw new ServiceException($message, $code);
-        }
-        return;
+    function printDEBUGMessage($message) {
+        return $this->logDEBUGMessage($message);
+    }
+
+    function printERRORMessage($message) {
+        return $this->logERRORMessage($message);
     }
 }
 ?>

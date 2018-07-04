@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.03
+// Version: 1.04
 //
 
 declare(strict_types = 1);
@@ -30,13 +30,16 @@ define("TOKENEXPIRED",           array("message" => "Token has expired, request 
 define("UNKNOWNERROR",           array("message" => "An unknown error has occured!", "code" => -9000));
 
 // lottery service errors
-define("ILLEGALLOTTERYID",     array("message" => "Lottery ID missing or illegal!", "code" => -9800));
-define("ILLEGALDRAWCOUNT",     array("message" => "Draw count out of range!", "code"       => -9801));
+define("ILLEGALLOTTERYID",       array("message" => "Lottery ID missing or illegal!", "code" => -9800));
+define("ILLEGALDRAWCOUNT",       array("message" => "Draw count out of range!", "code"       => -9801));
 
 // quote service errors
-define("ILLEGALAUTHORID",      array("message" => "Author ID missing or illegal!", "code" => -9700));
-define("ACTIVEAUTHORNOTFOUND", array("message" => "Author not found!",             "code" => -9701));
-define("AUTHORNOQUOTES",       array("message" => "Author has no quotes!",         "code" => -9702));
+define("ILLEGALAUTHORID",        array("message" => "Author ID missing or illegal!", "code" => -9700));
+define("ACTIVEAUTHORNOTFOUND",   array("message" => "Author not found!",             "code" => -9701));
+define("AUTHORNOQUOTES",         array("message" => "Author has no quotes!",         "code" => -9702));
+
+// filesystem error
+define("FILENOTFOUND",           array("message" => "Cannot find the input file!", "code" => -9600));
 
 class ServiceException extends Exception {
 
@@ -47,6 +50,7 @@ class ServiceException extends Exception {
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
         switch ($code) {
+            case -9600:
             case -9700:
             case -9800:
                 $this->htmlResponseCode = 400;
