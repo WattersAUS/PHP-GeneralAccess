@@ -2,10 +2,8 @@
 //
 //  Module: Common.php - G.J. Watson
 //    Desc: Contains modules to use through out scripts
-// Version: 2.02
+// Version: 2.03
 //
-
-require_once("ServiceException.php");
 
 final class Common {
 
