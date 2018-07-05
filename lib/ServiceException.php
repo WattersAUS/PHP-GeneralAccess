@@ -5,8 +5,6 @@
 // Version: 1.04
 //
 
-declare(strict_types = 1);
-
 // generic db errors
 define("DBCONNECTERROR",         array("message" => "Database connect failed",  "code" => -9990));
 define("DBQUERYERROR",           array("message" => "Database query failed",    "code" => -9991));
@@ -43,13 +41,10 @@ define("AUTHORNOQUOTES",         array("message" => "Author has no quotes!",    
 define("FILENOTFOUND",           array("message" => "Cannot find the input file!", "code" => -9600));
 
 class ServiceException extends Exception {
-
     private $htmlResponseCode;
     private $htmlResponseMsg;
-
     // message isn't optional
     public function __construct($message, $code = 0, Exception $previous = null) {
-        parent::__construct($message, $code, $previous);
         switch ($code) {
             case -9600:
             case -9700:
@@ -94,27 +89,23 @@ class ServiceException extends Exception {
                 $this->htmlResponseCode = 500;
                 $this->htmlResponseMsg  = "500 Internal Server Error";
         }
+        parent::__construct($message, $code, $previous);
     }
-
     public function getHTMLResponseCode() {
         return $this->htmlResponseCode;
     }
-
     public function getHTMLResponseMsg() {
         return $this->htmlResponseMsg;
     }
-
     // custom string representation of object
     public function __toString() {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
-
     // custom JSON fragment containing message
     public function jsonString() {
         $outputArray["code"]    = $this->code;
         $outputArray["message"] = $this->message;
         return json_encode($outputArray, JSON_NUMERIC_CHECK);
     }
-
 }
 ?>

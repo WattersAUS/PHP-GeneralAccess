@@ -39,15 +39,15 @@ final class Common {
     }
 
     function printINFOMessage($message) {
-        return $this->logINFOMessage($message);
+        print($this->logINFOMessage($message));
     }
 
     function printDEBUGMessage($message) {
-        return $this->logDEBUGMessage($message);
+        print($this->logDEBUGMessage($message));
     }
 
     function printERRORMessage($message) {
-        return $this->logERRORMessage($message);
+        print($this->logERRORMessage($message));
     }
 }
 ?>

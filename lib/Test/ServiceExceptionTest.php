@@ -4,7 +4,6 @@
 //    Desc: Tests for ServiceException
 // Version: 1.00
 //
-
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
@@ -12,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 require_once("ServiceException.php");
 
 final class ServiceExceptionTest extends TestCase {
-
     private $error;
 
     protected function setUp() {
@@ -22,7 +20,7 @@ final class ServiceExceptionTest extends TestCase {
     protected function tearDown() {
         $this->error = NULL;
     }
-
+    
     public function testServiceExceptionThrownCorrectly() {
         try {
             print("\nTesting ServiceException ACCESSDENIED error is thrown and caught correctly\n");
@@ -38,6 +36,5 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertNotEquals(1, $result);
         }
     }
-
 }
 ?>
