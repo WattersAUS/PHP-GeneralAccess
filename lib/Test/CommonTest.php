@@ -2,7 +2,7 @@
 //
 //  Module: CommonTest.php - G.J. Watson
 //    Desc: Tests for Common
-// Version: 1.00
+// Version: 1.01
 //
 
 declare(strict_types=1);
@@ -19,11 +19,11 @@ final class CommonTest extends TestCase {
     private $timePattern = "/(2[0-3]|[0][0-9]|1[0-9]):([0-5][0-9])/";
 
     protected function setUp() {
-        $this->common = new Common();
+        $this->common   = new Common();
     }
 
     protected function tearDown() {
-        $this->common = NULL;
+        $this->common   = NULL;
     }
 
     // test the code and message are set correctly on the constructor
@@ -133,95 +133,6 @@ final class CommonTest extends TestCase {
 
         }
         $this->assertEquals(TRUE, $result);
-    }
-
-    public function testValidateURLVariableExistsEmptyKey() {
-        try {
-            print("\nTEST: testValidateURLVariableExists\n");
-            $this->common->validateURLVariableExists("", "EXCEPTION: Testing Empty 'key'", 123, array("item1","item2"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-    }
-
-    public function testValidateURLVariableExistsEmptyArray() {
-        try {
-            print("\nTEST: testValidateURLVariableExistsEmptyArray\n");
-            $this->common->validateURLVariableExists("key", "EXCEPTION: Testing Empty 'array'", 123, array());
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-    }
-
-    public function testValidateURLVariableExistsKeyNotInArray() {
-        try {
-            print("\nTEST: testValidateURLVariableExistsKeyNotInArray\n");
-            $this->common->validateURLVariableExists("key", "EXCEPTION: Testing Key not in 'array'", 123, array("item1" => "one","item2" => "two"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-    }
-
-    public function testValidateURLVariableExistsKeyInArray() {
-        try {
-            print("\nTEST: testValidateURLVariableExistsKeyInArray\n");
-            $this->common->validateURLVariableExists("item1", "EXCEPTION: Testing Key in 'array'", 123, array("item1" => "one","item2" => "two"));
-            $this->assertEquals(1,   print("Key found in Array\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertNotEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-    }
-
-    public function testValidateNumericURLVariableNonNumericSupplied() {
-        try {
-            print("\nTEST: testValidateNumericURLVariable\n");
-            $this->common->validateNumericURLVariable("item1", "EXCEPTION: Testing Non Numeric supplied in 'array'", 123, array("item1" => "one","item2" => "two"));
-            $this->assertEquals(0,   print("We should not get here, supplying non numeric should throw exception\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
-    }
-
-    public function testValidateNumericURLVariableNumericSupplied() {
-        try {
-            print("\nTEST: testValidateNumericURLVariableNumericSupplied\n");
-            $this->common->validateNumericURLVariable("item1", "EXCEPTION: Testing Numeric supplied in 'array'", 123, array("item1" => 1,"item2" => 2));
-            $this->assertEquals(1,   print("Supplied numeric in array\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(0,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
     }
 }
 ?>
