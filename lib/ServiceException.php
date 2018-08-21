@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.05
+// Version: 1.06
 //
 
 // generic db errors
@@ -64,6 +64,9 @@ class ServiceException extends Exception {
                 break;
             case -9701:
             case -9702:
+                $this->htmlResponseCode = 404;
+                $this->htmlResponseMsg  = "404 Not Found";
+                break;
             case -9801:
                 $this->htmlResponseCode = 406;
                 $this->htmlResponseMsg  = "406 Not Acceptable";
