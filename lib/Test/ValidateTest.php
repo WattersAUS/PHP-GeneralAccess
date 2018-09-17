@@ -2,7 +2,7 @@
 //
 //  Module: ValidateTest.php - G.J. Watson
 //    Desc: Tests for Validate
-// Version: 1.00
+// Version: 1.01
 //
 
 declare(strict_types=1);
@@ -101,6 +101,38 @@ final class ValidateTest extends TestCase {
             print("\nTEST: testValidateNumericVariableNumericSupplied\n");
             $this->validate->numericVariable("item1", "EXCEPTION: Testing Numeric supplied in 'array'", 123, array("item1" => 1,"item2" => 2));
             $this->assertEquals(1,   print("Supplied numeric in array\n"));
+        } catch (ServiceException $e) {
+            // Should be caught here
+            $this->assertEquals(0,   print($e->jsonString()));
+        } catch (Exception $e) {
+            // And not here
+            $result = print($e->getMessage()."\n");
+            $this->assertNotEquals(1, $result);
+        }
+
+    }
+
+    public function testValidateDateTimeVariableNonDateTimeSupplied() {
+        try {
+            print("\nTEST: testValidateDateTimeVariableNonDateTimeSupplied\n");
+            $this->validate->datetimeVariable("item1", "EXCEPTION: Testing DateTime supplied in 'array'", 123, array("item1" => "2017-02-31 16:22:39","item2" => 2));
+            $this->assertEquals(0,   print("We should not get here, supplying non numeric should throw exception\n"));
+        } catch (ServiceException $e) {
+            // Should be caught here
+            $this->assertEquals(1,   print($e->jsonString()));
+        } catch (Exception $e) {
+            // And not here
+            $result = print($e->getMessage()."\n");
+            $this->assertNotEquals(1, $result);
+        }
+
+    }
+
+    public function testValidateDateTimeVariableDateTimeSupplied() {
+        try {
+            print("\nTEST: testValidateDateTimeVariableNonDateTimeSupplied\n");
+            $this->validate->datetimeVariable("item1", "EXCEPTION: Testing DateTime supplied in 'array'", 123, array("item1" => "2017-02-28 16:22:39","item2" => 2));
+            $this->assertEquals(1,   print("Supplied datetime in array\n"));
         } catch (ServiceException $e) {
             // Should be caught here
             $this->assertEquals(0,   print($e->jsonString()));

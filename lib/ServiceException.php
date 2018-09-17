@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.06
+// Version: 1.07
 //
 
 // generic db errors
@@ -29,13 +29,14 @@ define("TOKENEXPIRED",           array("message" => "Token has expired, request 
 define("UNKNOWNERROR",           array("message" => "An unknown error has occured!", "code" => -9000));
 
 // lottery service errors
-define("ILLEGALLOTTERYID",       array("message" => "Lottery ID missing or illegal!", "code"          => -9800));
+define("ILLEGALLOTTERYID",       array("message" => "Lottery ID missing or illegal!",          "code" => -9800));
 define("ILLEGALDRAWCOUNT",       array("message" => "Draw count out of range or not numeric!", "code" => -9801));
 
 // quote service errors
-define("ILLEGALAUTHORID",        array("message" => "Author ID missing or illegal!", "code" => -9700));
-define("ACTIVEAUTHORNOTFOUND",   array("message" => "Author not found!",             "code" => -9701));
-define("AUTHORNOQUOTES",         array("message" => "Author has no quotes!",         "code" => -9702));
+define("ILLEGALAUTHORID",        array("message" => "Author ID missing or illegal!",           "code" => -9700));
+define("ACTIVEAUTHORNOTFOUND",   array("message" => "Author not found!",                       "code" => -9701));
+define("AUTHORNOQUOTES",         array("message" => "Author has no quotes!",                   "code" => -9702));
+define("ILLEGALDATE",            array("message" => "Start date supplied missing or illegal!", "code" => -9703));
 
 // filesystem error
 define("FILENOTFOUND",           array("message" => "Cannot find the input file!", "code" => -9600));
@@ -67,6 +68,7 @@ class ServiceException extends Exception {
                 $this->htmlResponseCode = 404;
                 $this->htmlResponseMsg  = "404 Not Found";
                 break;
+            case -9703:
             case -9801:
                 $this->htmlResponseCode = 406;
                 $this->htmlResponseMsg  = "406 Not Acceptable";

@@ -2,7 +2,7 @@
 //
 //  Module: Validate.php - G.J. Watson
 //    Desc: Contains validation modules to use through out scripts
-// Version: 1.01
+// Version: 1.02
 //
 
 require_once("ServiceException.php");
@@ -36,6 +36,20 @@ final class Validate {
     function variableCheck($key, $message, $code, $len, $array) {
         $this->variableExists($key, $message, $code, $array);
         if (strlen($array[$key]) < 1 || strlen($array[$key]) > $len) {
+            throw new ServiceException($message, $code);
+        }
+        return;
+    }
+
+    function datetimeCheck($datetimestr) {
+        $frmt ="Y-m-d H:i:s";
+        $dt = DateTime::createFromFormat($frmt, $datetimestr);
+        return $dt && $dt->format($frmt) == $datetimestr;
+    }
+
+    function datetimeVariable($key, $message, $code, $array) {
+        $this->variableExists($key, $message, $code, $array);
+        if ($this->datetimeCheck($array[$key]) == FALSE) {
             throw new ServiceException($message, $code);
         }
         return;
