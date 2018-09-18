@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.07
+// Version: 1.08
 //
 
 // generic db errors
@@ -37,6 +37,7 @@ define("ILLEGALAUTHORID",        array("message" => "Author ID missing or illega
 define("ACTIVEAUTHORNOTFOUND",   array("message" => "Author not found!",                       "code" => -9701));
 define("AUTHORNOQUOTES",         array("message" => "Author has no quotes!",                   "code" => -9702));
 define("ILLEGALDATE",            array("message" => "Start date supplied missing or illegal!", "code" => -9703));
+define("NONEWQUOTESFOUND",       array("message" => "No new quotes found from supplied date!", "code" => -9704));
 
 // filesystem error
 define("FILENOTFOUND",           array("message" => "Cannot find the input file!", "code" => -9600));
@@ -65,6 +66,7 @@ class ServiceException extends Exception {
                 break;
             case -9701:
             case -9702:
+            case -9704:
                 $this->htmlResponseCode = 404;
                 $this->htmlResponseMsg  = "404 Not Found";
                 break;

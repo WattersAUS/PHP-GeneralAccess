@@ -2,7 +2,7 @@
 //
 //  Module: ServiceExceptionTest.php - G.J. Watson
 //    Desc: Tests for ServiceException
-// Version: 1.00
+// Version: 1.02
 //
 declare(strict_types=1);
 
@@ -333,6 +333,22 @@ final class ServiceExceptionTest extends TestCase {
             // Should be caught here
             $this->assertEquals(406, $e->getHTMLResponseCode());
             $this->assertEquals(0,   strcmp("406 Not Acceptable", $e->getHTMLResponseMsg()));
+            $this->assertEquals(1,   print($e->jsonString()));
+        } catch (Exception $e) {
+            // And not here
+            $result = print("Caught as normal exception!");
+            $this->assertNotEquals(1, $result);
+        }
+    }
+
+    public function testServiceExceptionNONEWQUOTESFOUNDThrownCorrectly() {
+        try {
+            print("\nTesting ServiceException NONEWQUOTESFOUND error is thrown and caught correctly\n");
+            throw new ServiceException(NONEWQUOTESFOUND["message"], NONEWQUOTESFOUND["code"]);
+        } catch (ServiceException $e) {
+            // Should be caught here
+            $this->assertEquals(404, $e->getHTMLResponseCode());
+            $this->assertEquals(0,   strcmp("404 Not Found", $e->getHTMLResponseMsg()));
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
