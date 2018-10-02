@@ -2,7 +2,7 @@
 //
 //  Module: ServiceExceptionTest.php - G.J. Watson
 //    Desc: Tests for ServiceException
-// Version: 1.02
+// Version: 1.03
 //
 declare(strict_types=1);
 
@@ -221,6 +221,22 @@ final class ServiceExceptionTest extends TestCase {
             // Should be caught here
             $this->assertEquals(403, $e->getHTMLResponseCode());
             $this->assertEquals(0,   strcmp("403 Forbidden", $e->getHTMLResponseMsg()));
+            $this->assertEquals(1,   print($e->jsonString()));
+        } catch (Exception $e) {
+            // And not here
+            $result = print("Caught as normal exception!");
+            $this->assertNotEquals(1, $result);
+        }
+    }
+
+    public function testServiceExceptionTOKENALLOCFAILUREThrownCorrectly() {
+        try {
+            print("\nTesting ServiceException TOKENALLOCFAILURE error is thrown and caught correctly\n");
+            throw new ServiceException(TOKENALLOCFAILURE["message"], TOKENALLOCFAILURE["code"]);
+        } catch (ServiceException $e) {
+            // Should be caught here
+            $this->assertEquals(500, $e->getHTMLResponseCode());
+            $this->assertEquals(0,   strcmp("500 Internal Server Error", $e->getHTMLResponseMsg()));
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here

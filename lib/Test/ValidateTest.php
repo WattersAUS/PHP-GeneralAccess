@@ -2,7 +2,7 @@
 //
 //  Module: ValidateTest.php - G.J. Watson
 //    Desc: Tests for Validate
-// Version: 1.01
+// Version: 1.02
 //
 
 declare(strict_types=1);
@@ -115,7 +115,7 @@ final class ValidateTest extends TestCase {
     public function testValidateDateTimeVariableNonDateTimeSupplied() {
         try {
             print("\nTEST: testValidateDateTimeVariableNonDateTimeSupplied\n");
-            $this->validate->datetimeVariable("item1", "EXCEPTION: Testing DateTime supplied in 'array'", 123, array("item1" => "2017-02-31 16:22:39","item2" => 2));
+            $this->validate->datetimeVariable("item1", "EXCEPTION: Testing Non DateTime supplied in 'array'", 123, array("item1" => "2017-02-31 16:22:39","item2" => 2));
             $this->assertEquals(0,   print("We should not get here, supplying non numeric should throw exception\n"));
         } catch (ServiceException $e) {
             // Should be caught here
@@ -133,6 +133,38 @@ final class ValidateTest extends TestCase {
             print("\nTEST: testValidateDateTimeVariableNonDateTimeSupplied\n");
             $this->validate->datetimeVariable("item1", "EXCEPTION: Testing DateTime supplied in 'array'", 123, array("item1" => "2017-02-28 16:22:39","item2" => 2));
             $this->assertEquals(1,   print("Supplied datetime in array\n"));
+        } catch (ServiceException $e) {
+            // Should be caught here
+            $this->assertEquals(0,   print($e->jsonString()));
+        } catch (Exception $e) {
+            // And not here
+            $result = print($e->getMessage()."\n");
+            $this->assertNotEquals(1, $result);
+        }
+
+    }
+
+    public function testValidateipAddressVariableNonipAddressSupplied() {
+        try {
+            print("\nTEST: testValidateipAddressVariableNonipAddressSupplied\n");
+            $this->validate->ipAddressVariable("item1", "EXCEPTION: Testing Non ipAddress supplied in 'array'", 123, array("item1" => "127.0.0.1.X","item2" => 2));
+            $this->assertEquals(0,   print("We should not get here, supplying non ipAddress should throw exception\n"));
+        } catch (ServiceException $e) {
+            // Should be caught here
+            $this->assertEquals(1,   print($e->jsonString()));
+        } catch (Exception $e) {
+            // And not here
+            $result = print($e->getMessage()."\n");
+            $this->assertNotEquals(1, $result);
+        }
+
+    }
+
+    public function testValidateipAddressVariableipAddressSupplied() {
+        try {
+            print("\nTEST: testValidateipAddressVariableipAddressSupplied\n");
+            $this->validate->ipAddressVariable("item1", "EXCEPTION: Testing ipAddress supplied in 'array'", 123, array("item1" => "127.0.0.1","item2" => 2));
+            $this->assertEquals(1,   print("Supplied ipAddress in array\n"));
         } catch (ServiceException $e) {
             // Should be caught here
             $this->assertEquals(0,   print($e->jsonString()));
