@@ -24,7 +24,7 @@ define("INCORRECTTOKENSUPPLIED", array("message" => "Service does not recognise 
 define("ACCESSDENIED",           array("message" => "Service access has been denied!",     "code" => -9972));
 define("TOOMANYREQUESTS",        array("message" => "Token blocked for usage abuse!",      "code" => -9973));
 define("TOKENEXPIRED",           array("message" => "Token has expired, request another!", "code" => -9974));
-define("TOKENALLOCFAILURE",      array("message" => "Failed tp allocate a new token!",     "code" => -9975));
+define("TOKENALLOCFAILURE",      array("message" => "Failed to allocate a new token!",     "code" => -9975));
 
 // no idea what went wrong
 define("UNKNOWNERROR",           array("message" => "An unknown error has occured!", "code" => -9000));
