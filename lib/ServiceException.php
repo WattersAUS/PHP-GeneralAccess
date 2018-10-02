@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.08
+// Version: 1.09
 //
 
 // generic db errors
@@ -24,6 +24,7 @@ define("INCORRECTTOKENSUPPLIED", array("message" => "Service does not recognise 
 define("ACCESSDENIED",           array("message" => "Service access has been denied!",     "code" => -9972));
 define("TOOMANYREQUESTS",        array("message" => "Token blocked for usage abuse!",      "code" => -9973));
 define("TOKENEXPIRED",           array("message" => "Token has expired, request another!", "code" => -9974));
+define("TOKENALLOCFAILURE",      array("message" => "Failed tp allocate a new token!",     "code" => -9975));
 
 // no idea what went wrong
 define("UNKNOWNERROR",           array("message" => "An unknown error has occured!", "code" => -9000));
@@ -52,40 +53,41 @@ class ServiceException extends Exception {
             case -9700:
             case -9800:
                 $this->htmlResponseCode = 400;
-                $this->htmlResponseMsg  = "400 Bad Request";
+                $this->htmlResponseMsg  = "Bad Request";
                 break;
             case -9970:
             case -9971:
                 $this->htmlResponseCode = 401;
-                $this->htmlResponseMsg  = "401 Unauthorized";
+                $this->htmlResponseMsg  = "Unauthorized";
                 break;
             case -9972:
             case -9974:
                 $this->htmlResponseCode = 403;
-                $this->htmlResponseMsg  = "403 Forbidden";
+                $this->htmlResponseMsg  = "Forbidden";
                 break;
             case -9701:
             case -9702:
             case -9704:
                 $this->htmlResponseCode = 404;
-                $this->htmlResponseMsg  = "404 Not Found";
+                $this->htmlResponseMsg  = "Not Found";
                 break;
             case -9703:
             case -9801:
                 $this->htmlResponseCode = 406;
-                $this->htmlResponseMsg  = "406 Not Acceptable";
+                $this->htmlResponseMsg  = "Not Acceptable";
                 break;
             case -9973:
                 $this->htmlResponseCode = 429;
-                $this->htmlResponseMsg  = "429 Too Many Requests";
+                $this->htmlResponseMsg  = "Too Many Requests";
                 break;
             case -9980:
             case -9981:
             case -9982:
                 $this->htmlResponseCode = 501;
-                $this->htmlResponseMsg  = "501 Not Implemented";
+                $this->htmlResponseMsg  = "Not Implemented";
                 break;
             case -9000:
+            case -9975:
             case -9983:
             case -9990:
             case -9991:
@@ -94,8 +96,9 @@ class ServiceException extends Exception {
             case -9999:
             default:
                 $this->htmlResponseCode = 500;
-                $this->htmlResponseMsg  = "500 Internal Server Error";
+                $this->htmlResponseMsg  = "Internal Server Error";
         }
+        $this->htmlResponseMsg = sprintf("%d %s", $this->htmlResponseCode, $this->htmlResponseMsg);
         parent::__construct($message, $code, $previous);
     }
     public function getHTMLResponseCode() {
