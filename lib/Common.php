@@ -2,7 +2,7 @@
 //
 //  Module: Common.php - G.J. Watson
 //    Desc: Contains modules to use through out scripts
-// Version: 2.03
+// Version: 2.04
 //
 
 final class Common {
@@ -18,16 +18,12 @@ final class Common {
         return date("Y-m-d H:i:s");
     }
 
-    private function logDateTime() {
-        return "[ ".$this->getGeneratedDateTime()." ] ";
-    }
-
     private function logMessage($type, $message) {
-        return $this->logDateTime().$type.": ".$message."\n";
+        return $this->getGeneratedDateTime()." [ ".$type." ] ".$message."\n";
     }
 
     function logINFOMessage($message) {
-        return $this->logMessage(" INFO", $message);
+        return $this->logMessage("INFO", $message);
     }
 
     function logDEBUGMessage($message) {
