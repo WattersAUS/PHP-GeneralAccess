@@ -373,6 +373,22 @@ final class ServiceExceptionTest extends TestCase {
         }
     }
 
+    public function testServiceExceptionNOMATCHINGQUOTESFOUNDThrownCorrectly() {
+        try {
+            print("\nTesting ServiceException NOMATCHINGQUOTESFOUND error is thrown and caught correctly\n");
+            throw new ServiceException(NOMATCHINGQUOTESFOUND["message"], NOMATCHINGQUOTESFOUND["code"]);
+        } catch (ServiceException $e) {
+            // Should be caught here
+            $this->assertEquals(404, $e->getHTMLResponseCode());
+            $this->assertEquals(0,   strcmp("404 Not Found", $e->getHTMLResponseMsg()));
+            $this->assertEquals(1,   print($e->jsonString()));
+        } catch (Exception $e) {
+            // And not here
+            $result = print("Caught as normal exception!");
+            $this->assertNotEquals(1, $result);
+        }
+    }
+
     public function testServiceExceptionFILENOTFOUNDThrownCorrectly() {
         try {
             print("\nTesting ServiceException FILENOTFOUND error is thrown and caught correctly\n");
@@ -388,6 +404,5 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertNotEquals(1, $result);
         }
     }
-
 }
 ?>
