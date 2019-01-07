@@ -32,7 +32,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("DBCONNECTERROR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -48,7 +48,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("DBQUERYERROR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -64,7 +64,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("DBINSERTERROR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -80,7 +80,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("DBUPDATEERROR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -96,7 +96,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("HTTPMETHODERROR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -112,7 +112,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("HTTPSUPPORTERROR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -128,7 +128,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("HTTPROUTINGERROR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -144,7 +144,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("MALFORMEDREQUEST caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -160,7 +160,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("ACCESSTOKENMISSING caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -176,7 +176,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("INCORRECTTOKENSUPPLIED caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -192,7 +192,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("ACCESSDENIED caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -208,7 +208,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("TOOMANYREQUESTS caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -224,7 +224,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("TOKENEXPIRED caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -240,7 +240,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("TOKENALLOCFAILURE caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -256,7 +256,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("UNKNOWNERROR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -272,7 +272,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("ILLEGALLOTTERYID caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -288,7 +288,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("ILLEGALDRAWCOUNT caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -304,7 +304,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("ILLEGALAUTHORID caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -320,7 +320,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("ACTIVEAUTHORNOTFOUND caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -336,7 +336,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("AUTHORNOQUOTES caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -352,7 +352,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("ILLEGALDATE caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -368,7 +368,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("NONEWQUOTESFOUND caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -384,7 +384,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("NOMATCHINGQUOTESFOUND caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
@@ -400,7 +400,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("Caught as normal exception!");
+            $result = print("FILENOTFOUND caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
