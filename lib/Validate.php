@@ -2,7 +2,7 @@
 //
 //  Module: Validate.php - G.J. Watson
 //    Desc: Contains validation modules to use through out scripts
-// Version: 1.03
+// Version: 1.04
 //
 
 require_once("ServiceException.php");
@@ -58,6 +58,14 @@ final class Validate {
     function ipAddressVariable($key, $message, $code, $array) {
         $this->variableExists($key, $message, $code, $array);
         if (filter_var($array[$key], FILTER_VALIDATE_IP) == FALSE) {
+            throw new ServiceException($message, $code);
+        }
+        return;
+    }
+
+    function GUIDVariable($key, $message, $code, $array) {
+        $this->variableExists($key, $message, $code, $array);
+        if (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $array[$key]) !== 1) {
             throw new ServiceException($message, $code);
         }
         return;
