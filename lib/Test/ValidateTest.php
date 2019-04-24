@@ -176,10 +176,10 @@ final class ValidateTest extends TestCase {
 
     }
 
-    public function testValidateGUIDVariableNonGUIDSupplied() {
+    public function testValidateGUIDCheckNonGUIDSupplied() {
         try {
-            print("\nTEST: testValidateGUIDVariableNonGUIDSupplied\n");
-            $this->validate->GUIDVariable("item1", "EXCEPTION: Testing Non GUID supplied in 'array'", 123, array("item1" => "52874026-7de2-11e7Xa9d6-00163eee1df8","item2" => 2));
+            print("\nTEST: testValidateGUIDCheckNonGUIDSupplied\n");
+            $this->validate->GUIDCheck("52874026-7de2-11e7Xa9d6-00163eee1df8", "EXCEPTION: Testing Non GUID supplied in 'array'", 123);
             $this->assertEquals(0,   print("We should not get here, supplying non GUID should throw exception\n"));
         } catch (ServiceException $e) {
             // Should be caught here
@@ -192,10 +192,10 @@ final class ValidateTest extends TestCase {
 
     }
 
-    public function testValidateGUIDVariableGUIDSupplied() {
+    public function testValidateGUIDCheckGUIDSupplied() {
         try {
-            print("\nTEST: testValidateGUIDVariableGUIDSupplied\n");
-            $this->validate->GUIDVariable("item1", "EXCEPTION: Testing GUID supplied in 'array'", 123, array("item1" => "52874026-7de2-11e7-a9d6-00163eee1df8","item2" => 2));
+            print("\nTEST: testValidateGUIDCheckGUIDSupplied\n");
+            $this->validate->GUIDCheck("52874026-7de2-11e7-a9d6-00163eee1df8", "EXCEPTION: Testing GUID supplied in 'array'", 123);
             $this->assertEquals(1,   print("Supplied GUID in array\n"));
         } catch (ServiceException $e) {
             // Should be caught here

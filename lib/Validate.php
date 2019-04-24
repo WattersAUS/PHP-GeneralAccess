@@ -2,7 +2,7 @@
 //
 //  Module: Validate.php - G.J. Watson
 //    Desc: Contains validation modules to use through out scripts
-// Version: 1.04
+// Version: 1.05
 //
 
 require_once("ServiceException.php");
@@ -63,9 +63,8 @@ final class Validate {
         return;
     }
 
-    function GUIDVariable($key, $message, $code, $array) {
-        $this->variableExists($key, $message, $code, $array);
-        if (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $array[$key]) !== 1) {
+    function GUIDCheck($guid, $message, $code) {
+        if (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $guid) !== 1) {
             throw new ServiceException($message, $code);
         }
         return;
