@@ -2,7 +2,7 @@
 //
 //  Module: ValidateTest.php - G.J. Watson
 //    Desc: Tests for Validate
-// Version: 1.03
+// Version: 1.04
 //
 
 declare(strict_types=1);
@@ -23,189 +23,80 @@ final class ValidateTest extends TestCase {
         $this->validate = NULL;
     }
 
-    public function testValidateVariableExistsEmptyKey() {
-        try {
-            print("\nTEST: testValidateVariableExists\n");
-            $this->validate->variableExists("", "EXCEPTION: Testing Empty 'key'", 123, array("item1","item2"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
+    //
+    // Tests for: checkVariableExistsInArray
+    //
+    public function testcheckVariableExistsInArrayCatchEmptyKey() {
+        print("\nTEST: testcheckVariableExistsInArrayCatchEmptyKey\n");
+        $this->assertEquals(FALSE, $this->validate->checkVariableExistsInArray("", array("item1","item2")));
     }
 
-    public function testValidateVariableExistsEmptyArray() {
-        try {
-            print("\nTEST: testValidateVariableExistsEmptyArray\n");
-            $this->validate->variableExists("key", "EXCEPTION: Testing Empty 'array'", 123, array());
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
+    public function testcheckVariableExistsInArrayCatchEmptyArray() {
+        print("\nTEST: testcheckVariableExistsInArrayCatchEmptyArray\n");
+        $this->assertEquals(FALSE, $this->validate->checkVariableExistsInArray("key", array()));
     }
 
-    public function testValidateVariableExistsKeyNotInArray() {
-        try {
-            print("\nTEST: testValidateVariableExistsKeyNotInArray\n");
-            $this->validate->variableExists("key", "EXCEPTION: Testing Key not in 'array'", 123, array("item1" => "one","item2" => "two"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
+    public function testcheckVariableExistsInArrayKeyNotInArray() {
+        print("\nTEST: testcheckVariableExistsInArrayKeyNotInArray\n");
+        $this->assertEquals(FALSE, $this->validate->checkVariableExistsInArray("key", array("item1","item2")));
     }
 
-    public function testValidateVariableExistsKeyInArray() {
-        try {
-            print("\nTEST: testValidateVariableExistsKeyInArray\n");
-            $this->validate->variableExists("item1", "EXCEPTION: Testing Key in 'array'", 123, array("item1" => "one","item2" => "two"));
-            $this->assertEquals(1,   print("Key found in Array\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertNotEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
+    public function testcheckVariableExistsInArrayKeyFoundInArray() {
+        print("\nTEST: testcheckVariableExistsInArrayKeyFoundInArray\n");
+        $this->assertEquals(TRUE, $this->validate->checkVariableExistsInArray("item1", array("item1" => "one","item2" => "two")));
     }
 
-    public function testValidateNumericVariableNonNumericSupplied() {
-        try {
-            print("\nTEST: testValidateNumericVariable\n");
-            $this->validate->numericVariable("item1", "EXCEPTION: Testing Non Numeric supplied in 'array'", 123, array("item1" => "one","item2" => "two"));
-            $this->assertEquals(0,   print("We should not get here, supplying non numeric should throw exception\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
 
+    //
+    // Tests for: isValidNumeric
+    //
+    public function testisValidNumericNonNumericSupplied() {
+        print("\nTEST: testisValidNumericNonNumericSupplied\n");
+        $this->assertEquals(FALSE, $this->validate->isValidNumeric("item1"));
     }
 
-    public function testValidateNumericVariableNumericSupplied() {
-        try {
-            print("\nTEST: testValidateNumericVariableNumericSupplied\n");
-            $this->validate->numericVariable("item1", "EXCEPTION: Testing Numeric supplied in 'array'", 123, array("item1" => 1,"item2" => 2));
-            $this->assertEquals(1,   print("Supplied numeric in array\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(0,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
+    public function testisValidNumericNumericSupplied() {
+        print("\nTEST: testisValidNumericNumericSupplied\n");
+        $this->assertEquals(TRUE, $this->validate->isValidNumeric(123));
     }
 
-    public function testValidateDateTimeVariableNonDateTimeSupplied() {
-        try {
-            print("\nTEST: testValidateDateTimeVariableNonDateTimeSupplied\n");
-            $this->validate->datetimeVariable("item1", "EXCEPTION: Testing Non DateTime supplied in 'array'", 123, array("item1" => "2017-02-31 16:22:39","item2" => 2));
-            $this->assertEquals(0,   print("We should not get here, supplying non numeric should throw exception\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
+    //
+    // Tests for: isValidDateTime
+    //
+    public function testisValidDateTimeNonDateTimeSupplied() {
+        print("\nTEST: testisValidDateTimeNonDateTimeSupplied\n");
+        $this->assertEquals(FALSE, $this->validate->isValidDateTime("2017-02-31 16:22:39"));
     }
 
-    public function testValidateDateTimeVariableDateTimeSupplied() {
-        try {
-            print("\nTEST: testValidateDateTimeVariableNonDateTimeSupplied\n");
-            $this->validate->datetimeVariable("item1", "EXCEPTION: Testing DateTime supplied in 'array'", 123, array("item1" => "2017-02-28 16:22:39","item2" => 2));
-            $this->assertEquals(1,   print("Supplied datetime in array\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(0,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
+    public function testisValidDateTimeValidDateTimeSupplied() {
+        print("\nTEST: testisValidDateTimeValidDateTimeSupplied\n");
+        $this->assertEquals(TRUE, $this->validate->isValidDateTime("2017-02-28 16:22:39"));
     }
 
-    public function testValidateipAddressVariableNonipAddressSupplied() {
-        try {
-            print("\nTEST: testValidateipAddressVariableNonipAddressSupplied\n");
-            $this->validate->ipAddressVariable("item1", "EXCEPTION: Testing Non ipAddress supplied in 'array'", 123, array("item1" => "127.0.0.1.X","item2" => 2));
-            $this->assertEquals(0,   print("We should not get here, supplying non ipAddress should throw exception\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
+    //
+    // Tests for: isValidIpAddress
+    //
+    public function testisValidIpAddressNonIpAddress() {
+        print("\nTEST: testisValidIpAddressNonIpAddress\n");
+        $this->assertEquals(FALSE, $this->validate->isValidIpAddress("192.168.0X.123"));
     }
 
-    public function testValidateipAddressVariableipAddressSupplied() {
-        try {
-            print("\nTEST: testValidateipAddressVariableipAddressSupplied\n");
-            $this->validate->ipAddressVariable("item1", "EXCEPTION: Testing ipAddress supplied in 'array'", 123, array("item1" => "127.0.0.1","item2" => 2));
-            $this->assertEquals(1,   print("Supplied ipAddress in array\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(0,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
+    public function testisValidIpAddressValidIpAddress() {
+        print("\nTEST: testisValidIpAddressValidIpAddress\n");
+        $this->assertEquals(TRUE, $this->validate->isValidIpAddress("127.0.0.1"));
     }
 
-    public function testValidateGUIDCheckNonGUIDSupplied() {
-        try {
-            print("\nTEST: testValidateGUIDCheckNonGUIDSupplied\n");
-            $this->validate->GUIDCheck("52874026-7de2-11e7Xa9d6-00163eee1df8", "EXCEPTION: Testing Non GUID supplied in 'array'", 123);
-            $this->assertEquals(0,   print("We should not get here, supplying non GUID should throw exception\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(1,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
+    //
+    // Tests for: isValidGUID
+    //
+    public function testisValidGUIDNonGUID() {
+        print("\nTEST: testisValidGUIDNonGUID\n");
+        $this->assertEquals(FALSE, $this->validate->isValidGUID("52874026-7de2-11e7Xa9d6-00163eee1df8"));
     }
 
-    public function testValidateGUIDCheckGUIDSupplied() {
-        try {
-            print("\nTEST: testValidateGUIDCheckGUIDSupplied\n");
-            $this->validate->GUIDCheck("52874026-7de2-11e7-a9d6-00163eee1df8", "EXCEPTION: Testing GUID supplied in 'array'", 123);
-            $this->assertEquals(1,   print("Supplied GUID in array\n"));
-        } catch (ServiceException $e) {
-            // Should be caught here
-            $this->assertEquals(0,   print($e->jsonString()));
-        } catch (Exception $e) {
-            // And not here
-            $result = print($e->getMessage()."\n");
-            $this->assertNotEquals(1, $result);
-        }
-
+    public function testisValidGUIDValidGUID() {
+        print("\nTEST: testisValidIpAddressValidIpAddress\n");
+        $this->assertEquals(TRUE, $this->validate->isValidGUID("52874026-7de2-11e7-a9d6-00163eee1df8"));
     }
 }
 ?>

@@ -404,5 +404,25 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertNotEquals(1, $result);
         }
     }
+
+    public function testServiceExceptionAUTHORISATIONFAILUREThrownCorrectly() {
+        try {
+            print("\nTesting ServiceException AUTHORISATIONFAILURE error is thrown and caught correctly\n");
+            throw new ServiceException(AUTHORISATIONFAILURE["message"], AUTHORISATIONFAILURE["code"]);
+        } catch (ServiceException $e) {
+            // Should be caught here
+            $this->assertEquals(401, $e->getHTMLResponseCode());
+            $this->assertEquals(0,   strcmp("401 Unauthorized", $e->getHTMLResponseMsg()));
+            $this->assertEquals(1,   print($e->jsonString()));
+        } catch (Exception $e) {
+            // And not here
+            $result = print("AUTHORISATIONFAILURE caught as normal exception!");
+            $this->assertNotEquals(1, $result);
+        }
+    }
+
+
+
+
 }
 ?>

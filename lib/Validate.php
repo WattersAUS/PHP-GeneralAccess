@@ -2,7 +2,7 @@
 //
 //  Module: Validate.php - G.J. Watson
 //    Desc: Contains validation modules to use through out scripts
-// Version: 1.05
+// Version: 1.06
 //
 
 require_once("ServiceException.php");
@@ -12,62 +12,38 @@ final class Validate {
     function __construct() {
     }
 
-    function variableExists($key, $message, $code, $array) {
+    function checkVariableExistsInArray($key, $array) {
         if (empty($key) || empty($array)) {
-            throw new ServiceException($message, $code);
+            return FALSE;
         }
         if (! array_key_exists($key, $array)) {
-            throw new ServiceException($message, $code);
+            return FALSE;
         }
         if (empty($array[$key])) {
-            throw new ServiceException($message, $code);
+            return FALSE;
         }
-        return;
+        return TRUE;
     }
 
-    function numericVariable($key, $message, $code, $array) {
-        $this->variableExists($key, $message, $code, $array);
-        if (!is_numeric($array[$key])) {
-            throw new ServiceException($message, $code);
-        }
-        return;
+    function isValidNumeric($number) {
+        return is_numeric($number);
     }
 
-    function variableCheck($key, $message, $code, $len, $array) {
-        $this->variableExists($key, $message, $code, $array);
-        if (strlen($array[$key]) < 1 || strlen($array[$key]) > $len) {
-            throw new ServiceException($message, $code);
-        }
-        return;
-    }
-
-    function datetimeCheck($datetimestr) {
+    function isValidDateTime($dateTime) {
         $frmt ="Y-m-d H:i:s";
-        $dt = DateTime::createFromFormat($frmt, $datetimestr);
-        return $dt && $dt->format($frmt) == $datetimestr;
+        $dt = DateTime::createFromFormat($frmt, $dateTime);
+        return $dt && $dt->format($frmt) == $dateTime;
     }
 
-    function datetimeVariable($key, $message, $code, $array) {
-        $this->variableExists($key, $message, $code, $array);
-        if ($this->datetimeCheck($array[$key]) == FALSE) {
-            throw new ServiceException($message, $code);
-        }
-        return;
+    function isValidIpAddress($ipAddress) {
+        return filter_var($ipAddress, FILTER_VALIDATE_IP) == $ipAddress;
     }
 
-    function ipAddressVariable($key, $message, $code, $array) {
-        $this->variableExists($key, $message, $code, $array);
-        if (filter_var($array[$key], FILTER_VALIDATE_IP) == FALSE) {
-            throw new ServiceException($message, $code);
-        }
-        return;
-    }
-
-    function GUIDCheck($guid, $message, $code) {
+    function isValidGUID($guid) {
         if (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $guid) !== 1) {
-            throw new ServiceException($message, $code);
+            return FALSE;
         }
-        return;
+        return TRUE;
     }
 }
 ?>

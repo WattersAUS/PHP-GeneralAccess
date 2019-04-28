@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.10
+// Version: 1.11
 //
 
 // generic db errors
@@ -25,6 +25,7 @@ define("ACCESSDENIED",           array("message" => "Service access has been den
 define("TOOMANYREQUESTS",        array("message" => "Token blocked for usage abuse!",      "code" => -9973));
 define("TOKENEXPIRED",           array("message" => "Token has expired, request another!", "code" => -9974));
 define("TOKENALLOCFAILURE",      array("message" => "Failed to allocate a new token!",     "code" => -9975));
+define("AUTHORISATIONFAILURE",   array("message" => "Authorisation failure!",              "code" => -9976));
 
 // no idea what went wrong
 define("UNKNOWNERROR",           array("message" => "An unknown error has occured!", "code" => -9000));
@@ -58,6 +59,7 @@ class ServiceException extends Exception {
                 break;
             case -9970:
             case -9971:
+            case -9976:
                 $this->htmlResponseCode = 401;
                 $this->htmlResponseMsg  = "Unauthorized";
                 break;
