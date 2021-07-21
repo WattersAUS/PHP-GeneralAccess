@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.12
+// Version: 1.13
 //
 
 // generic db errors
@@ -42,6 +42,7 @@ define("ILLEGALDATE",            array("message" => "Start date supplied missing
 define("NONEWQUOTESFOUND",       array("message" => "No new quotes found from supplied date!", "code" => -9704));
 define("NOMATCHINGQUOTESFOUND",  array("message" => "No matching quotes found!",               "code" => -9705));
 define("SEARCHNOTINLIMITS",      array("message" => "Search vars not in limits (1..32)!",      "code" => -9706));
+define("SEARCHVARNOTFOUND",      array("message" => "Search variable not found!",              "code" => -9707));
 
 // filesystem error
 define("FILENOTFOUND",           array("message" => "Cannot find the input file!", "code" => -9600));
@@ -55,6 +56,7 @@ class ServiceException extends Exception {
             case -9600:
             case -9700:
             case -9706:
+            case -9707:
             case -9800:
                 $this->htmlResponseCode = 400;
                 $this->htmlResponseMsg  = "Bad Request";
