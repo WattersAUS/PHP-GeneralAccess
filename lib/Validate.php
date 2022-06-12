@@ -2,11 +2,10 @@
 //
 //  Module: Validate.php - G.J. Watson
 //    Desc: Contains validation modules to use through out scripts
-// Version: 1.06
+// Version: 1.07
 //
 
 require_once("ServiceException.php");
-
 final class Validate {
 
     function __construct() {
@@ -27,6 +26,12 @@ final class Validate {
 
     function isValidNumeric($number) {
         return is_numeric($number);
+    }
+
+    function isValidDate($date) {
+        $frmt ="Y-m-d";
+        $dt = DateTime::createFromFormat($frmt, $date);
+        return $dt && $dt->format($frmt) == $date;
     }
 
     function isValidDateTime($dateTime) {

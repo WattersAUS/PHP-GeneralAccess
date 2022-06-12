@@ -2,7 +2,7 @@
 //
 //  Module: ServiceException.php - G.J. Watson
 //    Desc: Extend default Exception class to cover our Service (and other general) errors
-// Version: 1.13
+// Version: 1.14
 //
 
 // generic db errors
@@ -35,7 +35,7 @@ define("ILLEGALLOTTERYID",       array("message" => "Lottery ID missing or illeg
 define("ILLEGALDRAWCOUNT",       array("message" => "Draw count out of range or not numeric!", "code" => -9801));
 
 // quote service errors
-define("ILLEGALAUTHORID",        array("message" => "Author ID missing or illegal!",           "code" => -9700));
+define("UNKNOWNAUTHOR",          array("message" => "Unknown Author requested!",               "code" => -9700));
 define("ACTIVEAUTHORNOTFOUND",   array("message" => "Author not found!",                       "code" => -9701));
 define("AUTHORNOQUOTES",         array("message" => "Author has no quotes!",                   "code" => -9702));
 define("ILLEGALDATE",            array("message" => "Start date supplied missing or illegal!", "code" => -9703));

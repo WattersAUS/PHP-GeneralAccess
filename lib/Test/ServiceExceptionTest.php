@@ -2,7 +2,7 @@
 //
 //  Module: ServiceExceptionTest.php - G.J. Watson
 //    Desc: Tests for ServiceException
-// Version: 1.03
+// Version: 1.04
 //
 declare(strict_types=1);
 
@@ -293,10 +293,10 @@ final class ServiceExceptionTest extends TestCase {
         }
     }
 
-    public function testServiceExceptionILLEGALAUTHORIDThrownCorrectly() {
+    public function testServiceExceptionUNKNOWNAUTHORThrownCorrectly() {
         try {
             print("\nTesting ServiceException ILLEGALAUTHORID error is thrown and caught correctly\n");
-            throw new ServiceException(ILLEGALAUTHORID["message"], ILLEGALAUTHORID["code"]);
+            throw new ServiceException(UNKNOWNAUTHOR["message"], UNKNOWNAUTHOR["code"]);
         } catch (ServiceException $e) {
             // Should be caught here
             $this->assertEquals(400, $e->getHTMLResponseCode());
@@ -304,7 +304,7 @@ final class ServiceExceptionTest extends TestCase {
             $this->assertEquals(1,   print($e->jsonString()));
         } catch (Exception $e) {
             // And not here
-            $result = print("ILLEGALAUTHORID caught as normal exception!");
+            $result = print("UNKNOWNAUTHOR caught as normal exception!");
             $this->assertNotEquals(1, $result);
         }
     }
